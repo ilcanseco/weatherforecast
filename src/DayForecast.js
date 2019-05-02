@@ -1,10 +1,60 @@
-import React, { Component } from "react";
+import React from "react";
+
+import placeholder from "./images/feelsbadman.png";
+import clear from "./images/weather_clear.jpg";
+import clearNight from "./images/weather_clear_night.jpg";
+import fewClouds from "./images/weather_few_clouds.jpg";
+import fewCloudsNight from "./images/weather_few_clouds_night.jpg";
+import overcast from "./images/weather_overcast.jpg";
+import severeAlert from "./images/weather_severe_alert.jpg";
+import scatteredShowers from "./images/weather_showers_scattered.jpg";
+import showers from "./images/weather_showers.jpg";
+import snow from "./images/weather_snow.jpg";
+import storm from "./images/weather_storm.jpg";
 
 function DayForecast(props) {
+  var image = placeholder;
+  switch (props.weather) {
+    case "clear":
+      image = clear;
+      break;
+    case "clearNight":
+      image = clearNight;
+      break;
+    case "fewClouds":
+      image = fewClouds;
+      break;
+    case "fewCloudsNight":
+      image = fewCloudsNight;
+      break;
+    case "overcast":
+      image = overcast;
+      break;
+    case "severeAlert":
+      image = severeAlert;
+      break;
+    case "scatteredShowers":
+      image = scatteredShowers;
+
+      break;
+    case "showers":
+      image = showers;
+      break;
+    case "snow":
+      image = snow;
+      break;
+    case "storm":
+      image = storm;
+      break;
+    default:
+      image = placeholder;
+      break;
+  }
+
   return (
     <div>
       <p>{props.day}</p>
-      <img src={props.image} />
+      <img src={image} />
       <p>
         {props.tempHi} {props.tempLo}
       </p>
