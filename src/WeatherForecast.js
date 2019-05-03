@@ -85,19 +85,20 @@ class WeatherForecast extends Component {
 
   render() {
     return (
-      <div className="forecast">
-        {this.state.dayForecasts.map(forecast => (
-          <DayForecast
-            key={forecast.day}
-            day={indexToDay(forecast.day)}
-            tempHi={forecast.tempHigh}
-            tempLo={forecast.tempLow}
-            weather={forecast.weather}
-          />
-        ))}
-
+      <>
+        <div className="forecast">
+          {this.state.dayForecasts.map(forecast => (
+            <DayForecast
+              key={forecast.day}
+              day={indexToDay(forecast.day)}
+              tempHi={forecast.tempHigh}
+              tempLo={forecast.tempLow}
+              weather={forecast.weather}
+            />
+          ))}
+        </div>
         <button onClick={this.handleRefresh}>Refresh</button>
-      </div>
+      </>
     );
   }
 }
