@@ -15,13 +15,13 @@ import storm from "./images/weather_storm.jpg";
 function DayForecast(props) {
   var image = placeholder;
   switch (props.weather) {
-    case "clear":
+    case "Clear":
       image = clear;
       break;
     case "clearNight":
       image = clearNight;
       break;
-    case "fewClouds":
+    case "Clouds":
       image = fewClouds;
       break;
     case "fewCloudsNight":
@@ -35,9 +35,8 @@ function DayForecast(props) {
       break;
     case "scatteredShowers":
       image = scatteredShowers;
-
       break;
-    case "showers":
+    case "Rain":
       image = showers;
       break;
     case "snow":
@@ -54,7 +53,7 @@ function DayForecast(props) {
   return (
     <div>
       <p>{props.day}</p>
-      <img src={image} />
+      <img src={image} alt={props.weather} />
       <p>
         {props.tempHi} {props.tempLo}
       </p>
