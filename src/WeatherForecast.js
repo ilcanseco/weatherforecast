@@ -21,40 +21,54 @@ class WeatherForecast extends Component {
     );
     const data = await response.json();
     // example dayForecasts object: {"1": {tempHigh: 54, tempLow: 10}, "2": {tempHigh: 123, tempLow: 0}, ...}
-    const dayForecasts = {};
+    const dayForecasts = [];
+    // Initializing dayOfTheWeekIndex and index
+    const unixTimestamp = data.list[0].dt;
+    let dayOfTheWeekIndex = moment.unix(unixTimestamp).day();
+    let index = 0;
+
+    //mapping through data.list and building dayForecast[]
     data.list.map(forecast => {
-      // Seeing what day the forecast falls on
-      const unixTimestamp = forecast.dt;
-      const dayOfTheWeekIndex = moment.unix(unixTimestamp).day();
+      //Getting the current day
+      const currentDayUT = forecast.dt;
+      const currentDayIndex = moment.unix(currentDayUT).day();
 
       // Seeing if I need to update the highest temp for this current day
       const temps = forecast.main;
       const tempHigh = temps.temp_max;
       const tempLow = temps.temp_min;
 
-      // If the day key doesn't exist in dayForecasts, insert values without comparing
-      if (!dayForecasts.hasOwnProperty(dayOfTheWeekIndex)) {
+      //   If the day key doesn't exist in dayForecasts, insert values without comparing
+      if (!dayForecasts[index]) {
         const newDayForcast = {
+          day: currentDayIndex,
           tempHigh: convertKelvinToCelcius(tempHigh),
           tempLow: convertKelvinToCelcius(tempLow),
           weather: forecast.weather[0].main
-          // ADD MORE DATA!
         };
-        dayForecasts[dayOfTheWeekIndex] = newDayForcast;
+        dayForecasts[index] = newDayForcast;
       }
-      // if it does exist in dayForecasts, then compare the values of tempHigh and tempLow
+      //   if it does exist in dayForecasts, then compare the values of tempHigh and tempLow
       else {
-        // updates tempHigh if its less than temp_max
-        if (dayForecasts[dayOfTheWeekIndex].tempHigh < tempHigh) {
-          dayForecasts[dayOfTheWeekIndex].tempHigh = convertKelvinToCelcius(
-            tempHigh
-          );
+        // updates index and currentDayIndex and then creates a newDayForecast object
+        if (dayOfTheWeekIndex !== currentDayIndex) {
+          index++;
+          dayOfTheWeekIndex = currentDayIndex;
+          const newDayForcast = {
+            day: currentDayIndex,
+            tempHigh: convertKelvinToCelcius(tempHigh),
+            tempLow: convertKelvinToCelcius(tempLow),
+            weather: forecast.weather[0].main
+          };
+          dayForecasts[index] = newDayForcast;
         }
-        // updates tempLow if its greater than temp_min
-        if (dayForecasts[dayOfTheWeekIndex].tempLow > tempLow) {
-          dayForecasts[dayOfTheWeekIndex].tempLow = convertKelvinToCelcius(
-            tempLow
-          );
+        // updates tempHigh if its less than temp_max
+        if (dayForecasts[index].tempHigh < tempHigh) {
+          dayForecasts[index].tempHigh = convertKelvinToCelcius(tempHigh);
+        }
+        //   updates tempLow if its greater than temp_min
+        if (dayForecasts[index].tempLow > tempLow) {
+          dayForecasts[index].tempLow = convertKelvinToCelcius(tempLow);
         }
       }
       return;
@@ -71,7 +85,6 @@ class WeatherForecast extends Component {
   render() {
     return (
       <div className="forecast">
-        {}
         <DayForecast />
 
         <button onClick={this.handleRefresh}>Refresh</button>
