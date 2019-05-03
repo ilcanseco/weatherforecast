@@ -51,11 +51,11 @@ function DayForecast(props) {
   }
 
   return (
-    <div>
+    <div className="day-forecast">
       <p>{props.day}</p>
       <img src={image} alt={props.weather} />
       <p>
-        {props.tempHi} {props.tempLo}
+        <strong>{props.tempHi}</strong> {props.tempLo}
       </p>
     </div>
   );
