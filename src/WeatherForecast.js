@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
 import { convertKelvinToCelcius } from "./Utils";
+import { indexToDay } from "./Utils";
 
 class WeatherForecast extends Component {
   constructor() {
@@ -85,7 +86,15 @@ class WeatherForecast extends Component {
   render() {
     return (
       <div className="forecast">
-        <DayForecast />
+        {this.state.dayForecasts.map(forecast => (
+          <DayForecast
+            key={forecast.day}
+            day={indexToDay(forecast.day)}
+            tempHi={forecast.tempHigh}
+            tempLo={forecast.tempLow}
+            weather={forecast.weather}
+          />
+        ))}
 
         <button onClick={this.handleRefresh}>Refresh</button>
       </div>
