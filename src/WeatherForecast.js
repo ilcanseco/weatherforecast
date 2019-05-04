@@ -8,7 +8,8 @@ class WeatherForecast extends Component {
   constructor() {
     super();
     this.state = {
-      dayForecasts: []
+      dayForecasts: [],
+      isLoading: false
     };
   }
 
@@ -72,6 +73,7 @@ class WeatherForecast extends Component {
           dayForecasts[index].tempLow = convertKelvinToCelcius(tempLow);
         }
       }
+      this.setState({ isLoading: true });
       return;
     });
 
@@ -84,22 +86,31 @@ class WeatherForecast extends Component {
   };
 
   render() {
-    return (
-      <>
-        <div className="forecast">
-          {this.state.dayForecasts.map(forecast => (
-            <DayForecast
-              key={forecast.day}
-              day={indexToDay(forecast.day)}
-              tempHi={forecast.tempHigh}
-              tempLo={forecast.tempLow}
-              weather={forecast.weather}
-            />
-          ))}
-        </div>
-        <button onClick={this.handleRefresh}>Refresh</button>
-      </>
-    );
+    if (this.state.isLoading) {
+      return (
+        <>
+          <div className="forecast">
+            {this.state.dayForecasts.map(forecast => (
+              <DayForecast
+                key={forecast.day}
+                day={indexToDay(forecast.day)}
+                tempHi={forecast.tempHigh}
+                tempLo={forecast.tempLow}
+                weather={forecast.weather}
+              />
+            ))}
+          </div>
+          <button onClick={this.handleRefresh}>Refresh</button>
+        </>
+      );
+    } else {
+      return (
+        <h1 font-family="Futura" align-items="center">
+          {" "}
+          Loading...{" "}
+        </h1>
+      );
+    }
   }
 }
 
