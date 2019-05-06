@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
+<<<<<<< HEAD
 import { handleRefresh } from "./Utils";
+=======
+import { convertKelvinToCelcius, handleRefresh } from "./Utils";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import hourlyForecast from "./hourlyForecast";
+>>>>>>> master
 
 class WeatherForecast extends Component {
   constructor() {
@@ -43,8 +49,14 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
+<<<<<<< HEAD
           tempHigh: tempHigh,
           tempLow: tempLow,
+=======
+          // currentDayUT: currentDayUT,
+          tempHigh: convertKelvinToCelcius(tempHigh),
+          tempLow: convertKelvinToCelcius(tempLow),
+>>>>>>> master
           weather: forecast.weather[0].main
         };
         dayForecasts[index] = newDayForcast;
@@ -72,12 +84,13 @@ class WeatherForecast extends Component {
           dayForecasts[index].tempLow = tempLow;
         }
       }
-      this.setState({ isLoading: true });
       return;
     });
 
     //Setting the state
     this.setState({ dayForecasts: dayForecasts });
+    console.log(this.state.dayForecasts);
+    this.setState({ isLoading: true });
   }
 
   render() {
