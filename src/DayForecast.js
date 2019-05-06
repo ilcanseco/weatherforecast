@@ -42,7 +42,7 @@ function DayForecast(props) {
     case "Rain":
       image = showers;
       break;
-    case "snow":
+    case "Snow":
       image = snow;
       break;
     case "storm":
@@ -65,7 +65,11 @@ function DayForecast(props) {
           </p>
         </div>
       </Link>
-      <Route path="/hourlyForecast" component={hourlyForecast} />
+      <Route
+        path="/hourlyForecast"
+        component={hourlyForecast}
+        day={props.day}
+      />
     </Router>
   );
 }
