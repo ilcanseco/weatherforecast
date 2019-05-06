@@ -1,5 +1,7 @@
 import React from "react";
 import { convertKelvinToCelcius, indexToDay } from "./Utils";
+import hourlyForecast from "./hourlyForecast";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import placeholder from "./images/feelsbadman.png";
 import clear from "./images/weather_clear.jpg";
@@ -52,14 +54,19 @@ function DayForecast(props) {
   }
 
   return (
-    <div className="day-forecast">
-      <p>{indexToDay(props.day)}</p>
-      <img src={image} alt={props.weather} />
-      <p>
-        <strong>{convertKelvinToCelcius(props.tempHi)}</strong>{" "}
-        {convertKelvinToCelcius(props.tempLo)}
-      </p>
-    </div>
+    <Router>
+      <Link className="link" to="/hourlyForecast">
+        <div className="day-forecast">
+          <p>{indexToDay(props.day)}</p>
+          <img src={image} alt={props.weather} />
+          <p>
+            <strong>{convertKelvinToCelcius(props.tempHi)}</strong>{" "}
+            {convertKelvinToCelcius(props.tempLo)}
+          </p>
+        </div>
+      </Link>
+      <Route path="/hourlyForecast" component={hourlyForecast} />
+    </Router>
   );
 }
 
