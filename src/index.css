@@ -52,6 +52,14 @@ header > p {
   position: relative;
 }
 
+.link {
+  color: black;
+}
+
+.link :hover {
+  color: blueviolet;
+}
+
 button {
   font-family: Futura;
 }
