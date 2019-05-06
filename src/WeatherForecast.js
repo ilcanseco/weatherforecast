@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
-import { convertKelvinToCelcius, handleRefresh } from "./Utils";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import hourlyForecast from "./hourlyForecast";
+import { handleRefresh } from "./Utils";
 
 class WeatherForecast extends Component {
   constructor() {
