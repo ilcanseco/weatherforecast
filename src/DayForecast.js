@@ -1,4 +1,5 @@
 import React from "react";
+import { convertKelvinToCelcius, indexToDay } from "./Utils";
 
 import placeholder from "./images/feelsbadman.png";
 import clear from "./images/weather_clear.jpg";
@@ -52,10 +53,11 @@ function DayForecast(props) {
 
   return (
     <div className="day-forecast">
-      <p>{props.day}</p>
+      <p>{indexToDay(props.day)}</p>
       <img src={image} alt={props.weather} />
       <p>
-        <strong>{props.tempHi}</strong> {props.tempLo}
+        <strong>{convertKelvinToCelcius(props.tempHi)}</strong>{" "}
+        {convertKelvinToCelcius(props.tempLo)}
       </p>
     </div>
   );
