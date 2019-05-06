@@ -27,6 +27,7 @@ class hourlyForecast extends Component {
     console.log(currentDayOfTheYear);
     console.log(allForecastData);
     console.log(currentDateIndex);
+    // console.log(props.day);
   }
 
   parseData() {}
