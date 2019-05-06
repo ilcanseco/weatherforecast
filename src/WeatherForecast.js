@@ -45,14 +45,8 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
-<<<<<<< HEAD
           tempHigh: tempHigh,
           tempLow: tempLow,
-=======
-          // currentDayUT: currentDayUT,
-          tempHigh: convertKelvinToCelcius(tempHigh),
-          tempLow: convertKelvinToCelcius(tempLow),
->>>>>>> master
           weather: forecast.weather[0].main
         };
         dayForecasts[index] = newDayForcast;
