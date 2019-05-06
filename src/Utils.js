@@ -26,3 +26,7 @@ export const indexToDay = dayIndex => {
       return "Sun";
   }
 };
+
+export const handleRefresh = () => {
+  document.location.reload(true);
+};
