@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
-import { convertKelvinToCelcius } from "./Utils";
-import { indexToDay } from "./Utils";
+import { handleRefresh } from "./Utils";
 
 class WeatherForecast extends Component {
   constructor() {
@@ -44,8 +43,8 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
-          tempHigh: convertKelvinToCelcius(tempHigh),
-          tempLow: convertKelvinToCelcius(tempLow),
+          tempHigh: tempHigh,
+          tempLow: tempLow,
           weather: forecast.weather[0].main
         };
         dayForecasts[index] = newDayForcast;
@@ -58,19 +57,19 @@ class WeatherForecast extends Component {
           dayOfTheWeekIndex = currentDayIndex;
           const newDayForcast = {
             day: currentDayIndex,
-            tempHigh: convertKelvinToCelcius(tempHigh),
-            tempLow: convertKelvinToCelcius(tempLow),
+            tempHigh: tempHigh,
+            tempLow: tempLow,
             weather: forecast.weather[0].main
           };
           dayForecasts[index] = newDayForcast;
         }
         // updates tempHigh if its less than temp_max
         if (dayForecasts[index].tempHigh < tempHigh) {
-          dayForecasts[index].tempHigh = convertKelvinToCelcius(tempHigh);
+          dayForecasts[index].tempHigh = tempHigh;
         }
         //   updates tempLow if its greater than temp_min
         if (dayForecasts[index].tempLow > tempLow) {
-          dayForecasts[index].tempLow = convertKelvinToCelcius(tempLow);
+          dayForecasts[index].tempLow = tempLow;
         }
       }
       this.setState({ isLoading: true });
@@ -81,10 +80,6 @@ class WeatherForecast extends Component {
     this.setState({ dayForecasts: dayForecasts });
   }
 
-  handleRefresh = () => {
-    document.location.reload(true);
-  };
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -93,19 +88,19 @@ class WeatherForecast extends Component {
             {this.state.dayForecasts.map(forecast => (
               <DayForecast
                 key={forecast.day}
-                day={indexToDay(forecast.day)}
+                day={forecast.day}
                 tempHi={forecast.tempHigh}
                 tempLo={forecast.tempLow}
                 weather={forecast.weather}
               />
             ))}
           </div>
-          <button onClick={this.handleRefresh}>Refresh</button>
+          <button onClick={handleRefresh}>Refresh</button>
         </>
       );
     } else {
       return (
-        <h1 font-family="Futura" align-items="center">
+        <h1 fontFamily="Futura" align-items="center">
           {" "}
           Loading...{" "}
         </h1>
