@@ -45,6 +45,7 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
+          // currentDayUT: currentDayUT,
           tempHigh: convertKelvinToCelcius(tempHigh),
           tempLow: convertKelvinToCelcius(tempLow),
           weather: forecast.weather[0].main
@@ -59,6 +60,7 @@ class WeatherForecast extends Component {
           dayOfTheWeekIndex = currentDayIndex;
           const newDayForcast = {
             day: currentDayIndex,
+            // currentDayUT: currentDayUT,
             tempHigh: convertKelvinToCelcius(tempHigh),
             tempLow: convertKelvinToCelcius(tempLow),
             weather: forecast.weather[0].main
@@ -79,6 +81,7 @@ class WeatherForecast extends Component {
 
     //Setting the state
     this.setState({ dayForecasts: dayForecasts });
+    console.log(this.state.dayForecasts);
     this.setState({ isLoading: true });
   }
 
