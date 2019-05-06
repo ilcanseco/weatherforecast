@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
-import { convertKelvinToCelcius } from "./Utils";
-import { indexToDay } from "./Utils";
+import { convertKelvinToCelcius, handleRefresh } from "./Utils";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import hourlyForecast from "./hourlyForecast";
 
 class WeatherForecast extends Component {
   constructor() {
@@ -73,41 +74,46 @@ class WeatherForecast extends Component {
           dayForecasts[index].tempLow = convertKelvinToCelcius(tempLow);
         }
       }
-      this.setState({ isLoading: true });
       return;
     });
 
     //Setting the state
     this.setState({ dayForecasts: dayForecasts });
+    this.setState({ isLoading: true });
   }
-
-  handleRefresh = () => {
-    document.location.reload(true);
-  };
 
   render() {
     if (this.state.isLoading) {
       return (
         <>
-          <div className="forecast">
-            {this.state.dayForecasts.map(forecast => (
-              <DayForecast
-                key={forecast.day}
-                day={indexToDay(forecast.day)}
-                tempHi={forecast.tempHigh}
-                tempLo={forecast.tempLow}
-                weather={forecast.weather}
-              />
-            ))}
-          </div>
-          <button onClick={this.handleRefresh}>Refresh</button>
+          <Router>
+            <div className="forecast">
+              {this.state.dayForecasts.map(forecast => (
+                <Link
+                  to="/hourlyForecast"
+                  className="link"
+                  key={forecast.day}
+                  day={forecast.day}
+                >
+                  <DayForecast
+                    key={forecast.day}
+                    day={forecast.day}
+                    tempHi={forecast.tempHigh}
+                    tempLo={forecast.tempLow}
+                    weather={forecast.weather}
+                  />
+                </Link>
+              ))}
+              <Route path="/hourlyForecast" component={hourlyForecast} />
+            </div>
+            <button onClick={handleRefresh}>Refresh</button>
+          </Router>
         </>
       );
     } else {
       return (
-        <h1 font-family="Futura" align-items="center">
-          {" "}
-          Loading...{" "}
+        <h1 fontFamily="Futura" align-items="center">
+          Loading...
         </h1>
       );
     }
