@@ -79,7 +79,6 @@ class WeatherForecast extends Component {
 
     //Setting the state
     this.setState({ dayForecasts: dayForecasts });
-    console.log(this.state.dayForecasts);
     this.setState({ isLoading: true });
   }
 
