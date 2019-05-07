@@ -6,6 +6,7 @@ class WeatherForecast extends Component {
   constructor() {
     super();
     this.state = {
+      allForecastData: [],
       dayForecasts: [],
       isLoading: false
     };
@@ -20,6 +21,7 @@ class WeatherForecast extends Component {
       "https://api.openweathermap.org/data/2.5/forecast/?id=6087824&APPID=ef2c0ffcf44ef6ac7f9c1c6202cbc928"
     );
     const data = await response.json();
+    const allForecastData = data.list;
     // example dayForecasts object: {"1": {tempHigh: 54, tempLow: 10}, "2": {tempHigh: 123, tempLow: 0}, ...}
     const dayForecasts = [];
     // Initializing dayOfTheWeekIndex and index
@@ -28,7 +30,7 @@ class WeatherForecast extends Component {
     let index = 0;
 
     //mapping through data.list and building dayForecast[]
-    data.list.map(forecast => {
+    allForecastData.map(forecast => {
       //Getting the current day
       const currentDayUT = forecast.dt;
       const currentDayIndex = moment.unix(currentDayUT).day();
@@ -42,6 +44,7 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
+          dayUT: currentDayUT,
           tempHigh: tempHigh,
           tempLow: tempLow,
           weather: forecast.weather[0].main
@@ -56,6 +59,7 @@ class WeatherForecast extends Component {
           dayOfTheWeekIndex = currentDayIndex;
           const newDayForcast = {
             day: currentDayIndex,
+            dayUT: currentDayUT,
             tempHigh: tempHigh,
             tempLow: tempLow,
             weather: forecast.weather[0].main
@@ -75,8 +79,11 @@ class WeatherForecast extends Component {
     });
 
     //Setting the state
-    this.setState({ dayForecasts: dayForecasts });
-    this.setState({ isLoading: true });
+    this.setState({
+      dayForecasts: dayForecasts,
+      isLoading: true,
+      allForecastData: allForecastData
+    });
   }
 
   render() {
@@ -87,7 +94,9 @@ class WeatherForecast extends Component {
             {this.state.dayForecasts.map(forecast => (
               <DayForecast
                 key={forecast.day}
+                allData={this.state.allForecastData}
                 day={forecast.day}
+                dayUT={forecast.dayUT}
                 tempHi={forecast.tempHigh}
                 tempLo={forecast.tempLow}
                 weather={forecast.weather}
