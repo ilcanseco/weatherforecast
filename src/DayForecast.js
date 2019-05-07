@@ -57,7 +57,10 @@ function DayForecast(props) {
     <Router>
       <Link
         className="link"
-        to={{ pathname: "/hourlyForecast", state: { day: props.key } }}
+        to={{
+          pathname: "/hourlyForecast",
+          state: { day: props, allData: props.allData }
+        }}
       >
         <div className="day-forecast">
           <p>{indexToDay(props.day)}</p>
