@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
 import { handleRefresh } from "./Utils";
-
 class WeatherForecast extends Component {
   constructor() {
     super();
