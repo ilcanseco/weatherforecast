@@ -55,7 +55,10 @@ function DayForecast(props) {
 
   return (
     <Router>
-      <Link className="link" to="/hourlyForecast">
+      <Link
+        className="link"
+        to={{ pathname: "/hourlyForecast", state: { day: props.key } }}
+      >
         <div className="day-forecast">
           <p>{indexToDay(props.day)}</p>
           <img src={image} alt={props.weather} />
@@ -65,11 +68,7 @@ function DayForecast(props) {
           </p>
         </div>
       </Link>
-      <Route
-        path="/hourlyForecast"
-        component={hourlyForecast}
-        day={props.day}
-      />
+      <Route path="/hourlyForecast" component={hourlyForecast} />
     </Router>
   );
 }
