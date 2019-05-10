@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DayForecast from "./DayForecast.js";
 import moment from "moment";
 import { handleRefresh } from "./Utils";
+
 class WeatherForecast extends Component {
   constructor() {
     super();
@@ -33,6 +34,7 @@ class WeatherForecast extends Component {
     allForecastData.map(forecast => {
       //Getting the current day
       const currentDayUT = forecast.dt;
+      const currentDayTxt = forecast.dt_txt;
       const currentDayIndex = moment.unix(currentDayUT).day();
 
       // Seeing if I need to update the highest temp for this current day
@@ -44,7 +46,7 @@ class WeatherForecast extends Component {
       if (!dayForecasts[index]) {
         const newDayForcast = {
           day: currentDayIndex,
-          dayUT: currentDayUT,
+          dayTxt: currentDayTxt,
           tempHigh: tempHigh,
           tempLow: tempLow,
           weather: forecast.weather[0].main
@@ -59,7 +61,7 @@ class WeatherForecast extends Component {
           dayOfTheWeekIndex = currentDayIndex;
           const newDayForcast = {
             day: currentDayIndex,
-            dayUT: currentDayUT,
+            dayTxt: currentDayTxt,
             tempHigh: tempHigh,
             tempLow: tempLow,
             weather: forecast.weather[0].main
@@ -96,7 +98,7 @@ class WeatherForecast extends Component {
                 key={forecast.day}
                 allData={this.state.allForecastData}
                 day={forecast.day}
-                dayUT={forecast.dayUT}
+                dayTxt={forecast.dayTxt}
                 tempHi={forecast.tempHigh}
                 tempLo={forecast.tempLow}
                 weather={forecast.weather}
