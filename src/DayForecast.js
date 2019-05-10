@@ -1,6 +1,6 @@
 import React from "react";
 import { convertKelvinToCelcius, indexToDay } from "./Utils";
-import hourlyForecast from "./hourlyForecast";
+import dailyForecast from "./dailyForecast";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import placeholder from "./images/feelsbadman.png";
@@ -58,7 +58,7 @@ function DayForecast(props) {
       <Link
         className="link"
         to={{
-          pathname: "/hourlyForecast",
+          pathname: "/dailyForecast",
           state: { day: props, allData: props.allData }
         }}
       >
@@ -71,7 +71,7 @@ function DayForecast(props) {
           </p>
         </div>
       </Link>
-      <Route path="/hourlyForecast" component={hourlyForecast} />
+      <Route path="/dailyForecast" component={dailyForecast} />
     </Router>
   );
 }
