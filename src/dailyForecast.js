@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+import HourForecast from "./HourForecast";
 
 //Parse the data to get only the forecast for the particular day
 function dailyForecast(props) {
@@ -11,7 +11,6 @@ function dailyForecast(props) {
 
   //building particular day array
   const dayData = [];
-  let index = 0;
 
   //Mapping through forecastAllData
   forecastAllData.map(forecast => {
@@ -20,15 +19,22 @@ function dailyForecast(props) {
 
     // If the dayDate and the currentDate match, then push the forecastAllData[index] to the dayData array
     if (dayDate === currentDate) {
-      dayData.push(forecastAllData[index]);
+      dayData.push(forecast);
     }
-    index++;
   });
 
   return (
     <>
       <div>
-        <p>temp: {moment.unix(dayData[0].dt).calendar()}</p>
+        {dayData.map(forecast => (
+          <HourForecast
+            key={forecast.dt}
+            day={forecast.dt}
+            weather={forecast.weather[0].main}
+            tempHi={forecast.main.temp_max}
+            tempLo={forecast.main.temp_min}
+          />
+        ))}
       </div>
     </>
   );
